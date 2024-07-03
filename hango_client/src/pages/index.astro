@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Hello world request to localhost:8000/hangman/api/v1/hello_world
+
+const response = await fetch('http://localhost:8000/hangman/api/v1/hello');
+const data = await response.text();
+---
+
+<Layout >
+	<h1>{data}</h1>
+</Layout>
