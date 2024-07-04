@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import models
 
 # Create your models here.
@@ -8,6 +9,7 @@ class Hangman(models.Model):
     game_over = models.BooleanField() # Whether the game is over
     game_won = models.BooleanField()# Whether the game was won
     game_lost = models.BooleanField() # Whether the game was lost
+
     def __str__(self):
         return self.word
     

@@ -5,6 +5,10 @@ from hangman import views
 router = routers.DefaultRouter()
 router.register(r'hangman', views.HangmanView, 'hangman')
 
+url = 'api/v1/'
+
 urlpatterns = [
-    path('api/v1/', include(router.urls)),
+    path(url, include(router.urls)),
+    path(url +'hello/', views.hello),
+    path(url +'new_game/', views.new_game)
 ]
