@@ -1,12 +1,15 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import Menu from "../components/Menu.astro";
 
 // Hello world request to localhost:8000/hangman/api/v1/hello_world
 
-const response = await fetch('http://localhost:8000/hangman/api/v1/hello');
-const data = await response.text();
+const URL = "http://localhost:8000/hangman/api/v1/new_game";
+
+const response = await fetch(URL);
+const data = await response.json();
 ---
 
-<Layout >
-	<h1>{data}</h1>
+<Layout>
+  <Menu />
 </Layout>
