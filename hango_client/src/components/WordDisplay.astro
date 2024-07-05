@@ -1,0 +1,17 @@
+---
+
+// Este componente es la palabra que se muestra en la pantalla de hangman, por ejemplo: "_ _ _ _ _ _ _"
+
+const word = "Example Word";
+
+---
+
+<div class="word-display">
+  {word.split("").map((letter, index) => (
+    <span class="letter" key={index}>
+      {letter === " " ? " " : "_"}
+    </span>
+  ))}
+</div>
+
+
