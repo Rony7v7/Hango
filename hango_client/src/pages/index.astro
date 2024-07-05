@@ -1,13 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Menu from "../components/Menu.astro";
-
-// Hello world request to localhost:8000/hangman/api/v1/hello_world
-
-const URL = "http://localhost:8000/hangman/api/v1/new_game";
-
-const response = await fetch(URL);
-const data = await response.json();
 ---
 
 <Layout>
