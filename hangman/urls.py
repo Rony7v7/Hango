@@ -10,5 +10,6 @@ url = 'api/v1/'
 urlpatterns = [
     path(url, include(router.urls)),
     path(url +'hello/', views.hello),
-    path(url +'new_game/', views.new_game)
+    path(url +'new_game/', views.new_game),
+    path(url + 'guess_letter/<int:id>/<str:letter>/', views.guess_letter)
 ]
