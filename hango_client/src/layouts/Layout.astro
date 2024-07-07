@@ -1,5 +1,6 @@
 ---
 import Header from '../components/Header.astro'
+import ViewTransitions from 'astro/components/ViewTransitions.astro'
 ---
 
 <!doctype html>
@@ -11,6 +12,7 @@ import Header from '../components/Header.astro'
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>Hango</title>
+    <ViewTransitions />
   </head>
   <body>
     <main>
