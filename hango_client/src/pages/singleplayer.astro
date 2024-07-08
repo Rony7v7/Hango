@@ -1,20 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro"
-import Keyboard from "../components/Keyboard.astro"
-import WordDisplay from "../components/WordDisplay.astro"
+import GameComponent from "../components/GameComponent.jsx"
 
-import HangoIcon from "../components/icons/Hango.astro"
+import {newGame} from "../api/Hangman.api.ts"
+
+export const prerender = false // Server rendering is enabled
+
+const gameData =  await newGame()
 
 ---
 
 <Layout>
-    <div class="flex flex-col gap-6 w-fit m-auto p-5 rounded-md bg-white/60 justify-center items-center">
-        
-        <HangoIcon class="size-56" />
-
-        <WordDisplay />
-
-        <Keyboard />
-        
+    <div class="flex w-fit m-auto p-5 rounded-md bg-white/60 justify-center items-center">
+        <GameComponent gameData={gameData} client:visible />
     </div>
 </Layout>
