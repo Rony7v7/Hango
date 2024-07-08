@@ -17,38 +17,32 @@ def hello(request):
 # This method deletes all the games and creates a new one
 def new_game(request):
     word = HangmanView.wc.get_word(HangmanView.wc)
-    game = Hangman(word=word, attempts=7, guessed_letters='', game_over=False, game_won=False, game_lost=False)
+    # Hangman.objects.all().delete()
+    game = Hangman(word=word, attempts=7, guessed_letters='', game_won=False, game_lost=False)
     game.save()
-    return JsonResponse({'id' : game.id,'word': game.word})
+    return JsonResponse({'id' : game.id,'word': game.word, 'attempts': game.attempts, 'guessed_letters': game.guessed_letters})
 
 @csrf_exempt
-def guess_letter(request, id, letter):
+def guess_letter(request, id, letter): # FIX: words with letters that are the same
     game = Hangman.objects.get(id=id)
-    if game.game_over:
-        return JsonResponse({'message': 'Game is over'})
-    if game.game_won:
-        return JsonResponse({'message': 'Game is already won'})
-    if game.game_lost:
-        return JsonResponse({'message': 'Game is already lost'})
+    message = ''
+    
     if letter in game.guessed_letters:
-        return JsonResponse({'message': 'Letter already guessed'})
-    if letter in game.word:
+        message = 'Letter already guessed'
+
+    elif letter in game.word and game.game_lost == False:
         game.guessed_letters += letter
         if set(game.word) == set(game.guessed_letters):
             game.game_won = True
-            game.game_over = True
-            game.save()
-            return JsonResponse({'message': 'Game won'})
+            message = 'Game won'
     else:
-        game.attempts -= 1
         if game.attempts == 0:
             game.game_lost = True
-            game.game_over = True
-            game.save()
-            return JsonResponse({'message': 'Game lost'})
-        if letter not in game.word:
-            game.save()
-            return JsonResponse({'message': 'Letter not in word'})
+            message = 'Game lost'
+        elif letter not in game.word:
+            game.attempts -= 1
+            message = 'Letter not in word'
 
     game.save()
-    return JsonResponse({'message': 'Letter guessed'})
+    # return game in json format
+    return JsonResponse({'id' : game.id,'word': game.word, 'attempts': game.attempts, 'guessed_letters': game.guessed_letters, 'message': message})
