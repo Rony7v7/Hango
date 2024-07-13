@@ -7,6 +7,7 @@ import Keyboard from './Keyboard.jsx';
 const GameComponent = ({ gameData }) => {
     const [game, setGame] = useState(gameData);
     const [typedLetter, setTypedLetter] = useState('');
+    const [lettersHistory, setLettersHistory] = useState('');
 
     const handleGuess = async () => {
         if (typedLetter.length ) {
@@ -19,6 +20,7 @@ const GameComponent = ({ gameData }) => {
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             handleGuess();
+            setLettersHistory(lettersHistory + typedLetter);
             setTypedLetter('');
         } else if(event.key === 'Backspace') {
             setTypedLetter('');
@@ -26,6 +28,18 @@ const GameComponent = ({ gameData }) => {
             setTypedLetter(event.key);
         }
     };
+
+    const handleKeyClick = (key) => {
+        if (key === 'SEND') {
+            handleGuess();
+            setLettersHistory(lettersHistory + typedLetter);
+            setTypedLetter('');
+        } else if (key === 'BACKSPACE') {
+            setTypedLetter('');
+        } else {
+            setTypedLetter(key.toLowerCase());
+        }
+    }
 
     useEffect(() => {
         setGame(gameData);
@@ -50,7 +64,7 @@ const GameComponent = ({ gameData }) => {
                     {typedLetter.toUpperCase()}
                 </span>
                 <WordDisplay word={game.word} guessedLetters={game.guesses} />
-                <Keyboard onKeyClick={setTypedLetter}/>
+                <Keyboard onKeyClick={handleKeyClick} guessedLetters={game.guesses} typedLetters={lettersHistory}/>
                 <div>Attempts: {game.attempts}</div>
             </div>
         </>
