@@ -3,6 +3,10 @@
 // Astro diferente. Son 7 en total y están ubicados en /public/img/gallow
 
 const Gallow = ({attempts}) => {
+    if (attempts >= 8) {
+        attempts --;
+    }
+
     return (
         <img src={`/img/gallow/gallow_${attempts}.svg`} alt={`Gallow ${attempts}`} />
     );
