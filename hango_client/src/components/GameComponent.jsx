@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'preact/hooks';
+import { guessLetter } from '../api/Hangman.api.ts';
 import WordDisplay from './WordDisplay.jsx';
 import Gallow from './Gallow.jsx';
 import Keyboard from './Keyboard.jsx';
-import { guessLetter } from '../api/Hangman.api.ts';
 
 const GameComponent = ({ gameData }) => {
     const [game, setGame] = useState(gameData);
@@ -50,7 +50,8 @@ const GameComponent = ({ gameData }) => {
                     {typedLetter.toUpperCase()}
                 </span>
                 <WordDisplay word={game.word} guessedLetters={game.guesses} />
-                <Keyboard />
+                <Keyboard onKeyClick={setTypedLetter}/>
+                <div>Attempts: {game.attempts}</div>
             </div>
         </>
     );

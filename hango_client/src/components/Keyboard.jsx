@@ -6,13 +6,14 @@ const keys = [
     ["SEND", "Z", "X", "C", "V", "B", "N", "M", "<-"],
 ];
 
-function Keyboard() {
+function Keyboard({ onKeyClick }) {
     return (
         <div id="keyboard" class="flex max-w-lg flex-col gap-2 w-fit items-center">
             {keys.map((row) => (
                 <div class="flex gap-2 max-w-[472px]">
                     {row.map((key) => (
-                        <button key={key} class="flex items-center justify-center min-w-[40px] h-[40px] px-4 rounded-md bg-gray-200 hover:bg-gray-400/50">
+                        <button key={key} class="flex items-center justify-center min-w-[40px] h-[40px] px-4 rounded-md bg-gray-200 hover:bg-gray-400/50"
+                        onClick={() => onKeyClick(key)}>
                             {!key ? <Backspace /> : key}
                         </button>
                     ))}
