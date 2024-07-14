@@ -25,7 +25,10 @@ def new_game(request):
 @csrf_exempt
 def guess_letter(request, id, letter): # FIX: words with letters that are the same
     game = Hangman.objects.get(id=id)
-    message = ''
+    message = 'Is correct'
+
+    if game.game_won == True:
+        message = 'Game already won'
     
     if letter in game.guessed_letters:
         message = 'Letter already guessed'
@@ -45,4 +48,9 @@ def guess_letter(request, id, letter): # FIX: words with letters that are the sa
 
     game.save()
     # return game in json format
-    return JsonResponse({'id' : game.id,'word': game.word, 'attempts': game.attempts, 'guessed_letters': game.guessed_letters, 'message': message})
+    return JsonResponse({'id' : game.id,
+                        'word': game.word, 
+                        'attempts': game.attempts, 
+                        'guessed_letters': game.guessed_letters, 
+                        'message': message,
+                        'game_won': game.game_won})
