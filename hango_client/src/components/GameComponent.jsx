@@ -38,7 +38,7 @@ const GameComponent = ({ gameData }) => {
         } else if (key === 'BACKSPACE') {
             setTypedLetter('');
         } else {
-            setTypedLetter(key.toLowerCase());
+            setTypedLetter(key);
         }
     }
 
