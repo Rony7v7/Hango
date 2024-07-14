@@ -6,8 +6,6 @@ const keys = [
     ["SEND", "Z", "X", "C", "V", "B", "N", "M", false],
 ];
 
-
-
 function Keyboard({ onKeyClick, guessedLetters, typedLetters}) {
 
     guessedLetters = guessedLetters.split('').map(letter => letter.toUpperCase());
