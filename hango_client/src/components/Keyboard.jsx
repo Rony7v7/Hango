@@ -18,9 +18,8 @@ function Keyboard({ onKeyClick, guessedLetters, typedLetters}) {
             {keys.map((row) => (
                 <div class="flex gap-2 max-w-[472px]">
                     {row.map((key) => (
-                        <button key={key} class={`flex items-center font-medium justify-center min-w-[40px] h-[40px] px-4 bg-gray-200 rounded-md 
-                            hover:bg-gray-400/50`
-                            + (guessedLetters.includes(key) ? ' bg-[#43A047] text-white hover:bg-[#3b883f]' : '') 
+                        <button key={key} class={`flex items-center font-medium justify-center min-w-[40px] h-[40px] px-4 rounded-md `
+                            + (guessedLetters.includes(key) ? ' bg-[#43A047] text-white hover:bg-[#3b883f]' : ' bg-gray-200 hover:bg-gray-400/50') 
                             + ((typedLetters.includes(key) && !guessedLetters.includes(key)) ? ' bg-gray-500 text-white hover:bg-gray-600' : '')
                         }
                         
