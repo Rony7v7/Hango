@@ -20,7 +20,7 @@ export async function guessLetter(id:string, letter:string) {
         },
     });
     const data = await res.json();    
-    return {id: data.id, word: data.word, guesses: data.guessed_letters, attempts: data.attempts, message: data.message, status: data.status};
+    return {id: data.id, word: data.word, guesses: data.guessed_letters, attempts: data.attempts, message: data.message, status: data.game_won};
 }
 
 export async function exitGame(id:string) {

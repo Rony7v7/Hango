@@ -3,6 +3,7 @@ import { guessLetter } from '../api/Hangman.api.ts';
 import WordDisplay from './WordDisplay.jsx';
 import Gallow from './Gallow.jsx';
 import Keyboard from './Keyboard.jsx';
+import GameOverModal from './GameOverModal.jsx';
 
 const GameComponent = ({ gameData }) => {
     const [game, setGame] = useState(gameData);
@@ -58,6 +59,9 @@ const GameComponent = ({ gameData }) => {
 
     return (
         <>
+            
+            <GameOverModal gameId={game.id} show={game.status || game.attempts == 0 } gameStatus={game.status} word={game.word} />
+
             <Gallow attempts={8 - game.attempts} />
             <div class="flex flex-col items-center gap-8">
                 <span class="text-9xl flex justify-center font-medium h-36 w-40 border-b-2 mb-2" name="slot">
