@@ -1,9 +1,8 @@
-import Backspace from "./icons/Backspace.svg";
 
 const keys = [
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ"],
-    ["SEND", "Z", "X", "C", "V", "B", "N", "M", false],
+    ["SEND", "Z", "X", "C", "V", "B", "N", "M", "BACKSPACE"],
 ];
 
 function Keyboard({ onKeyClick, guessedLetters, typedLetters}) {
@@ -22,7 +21,7 @@ function Keyboard({ onKeyClick, guessedLetters, typedLetters}) {
                         }
                         
                         onClick={() => onKeyClick(key)}>
-                            {key}
+                            {key === 'BACKSPACE' ? <img src="/img/icons/Backspace.svg" alt="Backspace" class="size-7 m-0" /> : key}
                         </button>
                     ))}
                 </div>
