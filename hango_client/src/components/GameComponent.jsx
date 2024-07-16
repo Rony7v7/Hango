@@ -11,8 +11,8 @@ const GameComponent = ({ gameData }) => {
     const [lettersHistory, setLettersHistory] = useState('');
 
     const handleGuess = async () => {
-        if (typedLetter.length ) {
-            const res = await guessLetter(game.id, typedLetter);
+        if (typedLetter) {
+            const res = await guessLetter(game.id, typedLetter.toLowerCase());
             console.log(res);
             setGame(res);
         }
