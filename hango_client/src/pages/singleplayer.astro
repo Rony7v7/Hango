@@ -1,17 +1,27 @@
 ---
 import Layout from "../layouts/Layout.astro"
 import GameComponent from "../components/GameComponent.jsx"
+import Error from "./error.astro"
 
 import {newGame} from "../api/Hangman.api.ts"
 
 export const prerender = false // Server rendering is enabled
 
-const gameData =  await newGame()
+let gameData = null
+let errorMessage = null
+
+try {
+    gameData = await newGame()
+} catch (error) {
+    console.error(error)    
+    errorMessage = (error as any).message
+}
+
 
 ---
 
 <Layout>
     <div class="flex w-fit m-auto p-5 rounded-md bg-white/60 justify-center items-center">
-        <GameComponent gameData={gameData} client:visible />
+        {(gameData === null)? <Error code="0" message={errorMessage} /> : <GameComponent gameData={gameData} client:visible />}
     </div>
 </Layout>
