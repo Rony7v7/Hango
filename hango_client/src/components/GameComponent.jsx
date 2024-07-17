@@ -9,38 +9,50 @@ const GameComponent = ({ gameData }) => {
     const [game, setGame] = useState(gameData);
     const [typedLetter, setTypedLetter] = useState('');
     const [lettersHistory, setLettersHistory] = useState('');
+    const [error, setError] = useState(null);
 
     const handleGuess = async () => {
-        if (typedLetter) {
-            const res = await guessLetter(game.id, typedLetter.toLowerCase());
-            console.log(res);
-            setGame(res);
+        try {
+            if (typedLetter) {
+                const res = await guessLetter(game.id, typedLetter.toLowerCase());
+                setGame(res);
+            }
+        } catch (error) {
+            setError(error.message);
         }
-    }
+    };
 
     const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            handleGuess();
-            setLettersHistory(lettersHistory + typedLetter);
-            setTypedLetter('');
-        } else if(event.key === 'Backspace') {
-            setTypedLetter('');
-        }else if(event.key.length === 1 && event.key.match(/[a-z,ñ]/i)) {
-            setTypedLetter(event.key);
+        try {
+            if (event.key === 'Enter') {
+                handleGuess();
+                setLettersHistory(lettersHistory + typedLetter);
+                setTypedLetter('');
+            } else if (event.key === 'Backspace') {
+                setTypedLetter('');
+            } else if (event.key.length === 1 && event.key.match(/[a-z,ñ]/i)) {
+                setTypedLetter(event.key);
+            }
+        } catch (error) {
+            setError(error.message);
         }
     };
 
     const handleKeyClick = (key) => {
-        if (key === 'SEND') {
-            handleGuess();
-            setLettersHistory(lettersHistory + typedLetter);
-            setTypedLetter('');
-        } else if (key === 'BACKSPACE') {
-            setTypedLetter('');
-        } else {
-            setTypedLetter(key);
+        try {
+            if (key === 'SEND') {
+                handleGuess();
+                setLettersHistory(lettersHistory + typedLetter);
+                setTypedLetter('');
+            } else if (key === 'BACKSPACE') {
+                setTypedLetter('');
+            } else {
+                setTypedLetter(key);
+            }
+        } catch (error) {
+            setError(error.message);
         }
-    }
+    };
 
     useEffect(() => {
         setGame(gameData);
@@ -52,23 +64,23 @@ const GameComponent = ({ gameData }) => {
         return () => {
             document.removeEventListener('keydown', handleKeyDownRef);
         };
-    }, [typedLetter]); // Agregar typedLetter como dependencia para garantizar su actualización
+    }, [typedLetter]);
 
-
-
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
 
     return (
         <>
-            
-            <GameOverModal gameId={game.id} show={game.status || game.attempts == 0 } gameStatus={game.status} word={game.word} />
+            <GameOverModal gameId={game.id} show={game.status || game.attempts === 0} gameStatus={game.status} word={game.word} />
 
             <Gallow attempts={8 - game.attempts} />
-            <div class="flex flex-col items-center gap-8">
-                <span class="text-9xl flex justify-center font-medium h-36 w-40 border-b-2 mb-2" name="slot">
+            <div className="flex flex-col items-center gap-8">
+                <span className="text-9xl flex justify-center font-medium h-36 w-40 border-b-2 mb-2" name="slot">
                     {typedLetter.toUpperCase()}
                 </span>
                 <WordDisplay word={game.word} guessedLetters={game.guesses} />
-                <Keyboard onKeyClick={handleKeyClick} guessedLetters={game.guesses} typedLetters={lettersHistory}/>
+                <Keyboard onKeyClick={handleKeyClick} guessedLetters={game.guesses} typedLetters={lettersHistory} />
                 <div>Attempts: {game.attempts}</div>
             </div>
         </>
